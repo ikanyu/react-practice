@@ -12,7 +12,7 @@ import Row from 'react-bootstrap/Row';
 import Container from 'react-bootstrap/Container';
 import Button from 'react-bootstrap/Button';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
-import { faCloud, faSun } from '@fortawesome/free-solid-svg-icons';
+import { faCloud, faSun, faCloudSun } from '@fortawesome/free-solid-svg-icons';
 
 async function retrieveForecast() {
   let currentDateTime = moment.tz('Asia/Singapore').format();
@@ -46,6 +46,8 @@ function List(props) {
         iconClass = faCloud;
       } else if (result.includes('Sun')) {
         iconClass = faSun;
+      } else if (result == 'Partly Cloudy (Day)') {
+        iconClass = faCloudSun;
       }
 
       return (
