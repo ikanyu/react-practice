@@ -38,6 +38,21 @@ export default function Home() {
     setWorkouts(result);
   }
 
+  function handleDelete(e) {
+    console.log(e.target);
+    const dayId = parseInt(e.target.dataset.id);
+    const linkToDelete = e.target.dataset.link;
+
+    const updatedWorkouts = workouts.map((workout) => ({
+      ...workout,
+      links:
+        workout.id === dayId
+          ? workout.links.filter((link) => link !== linkToDelete)
+          : workout.links,
+    }));
+    setWorkouts(updatedWorkouts);
+  }
+
   return (
     <>
       <h1>Hello World!</h1>
@@ -53,14 +68,16 @@ export default function Home() {
           </form>
           <h3>Links</h3>
           {workout.links.map((link) => (
-            <div>
-              {/* {link} */}
-              <iframe
-                key={uuidv4()}
-                width="420"
-                height="315"
-                src={link}
-              ></iframe>
+            <div key={uuidv4()}>
+              <iframe width="420" height="315" src={link}></iframe>
+              <button
+                type="Button"
+                onClick={handleDelete}
+                data-id={workout.id}
+                data-link={link}
+              >
+                Delete Workout
+              </button>
             </div>
           ))}
         </div>
