@@ -26,6 +26,22 @@ export default function Home() {
     }));
   };
 
+  const addWorkoutByDay = (dayId) => {
+    const updatedWorkouts = workouts.concat({
+      id: dayId,
+      links: [],
+    });
+    setWorkouts(updatedWorkouts);
+  };
+
+  function handleAddDay(e) {
+    const updatedCounter = days + 1;
+    setDays(updatedCounter);
+
+    const dayId = parseInt(e.target.dataset.id);
+    addWorkoutByDay(dayId);
+  }
+
   function handleSubmit(e) {
     e.preventDefault();
 
@@ -51,6 +67,10 @@ export default function Home() {
           : workout.links,
     }));
     setWorkouts(updatedWorkouts);
+  }
+
+  function isNotSunday() {
+    return days !== 7;
   }
 
   return (
@@ -82,6 +102,11 @@ export default function Home() {
           ))}
         </div>
       ))}
+      {isNotSunday() && (
+        <button onClick={handleAddDay} data-id={days + 1}>
+          Add {daysOfWeek[days + 1]} Workout
+        </button>
+      )}
     </>
   );
 }
