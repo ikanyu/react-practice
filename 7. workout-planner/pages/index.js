@@ -75,38 +75,47 @@ export default function Home() {
 
   return (
     <>
-      <h1>Hello World!</h1>
-      Counter: {daysOfWeek[days]}
-      <br />
-      https://www.youtube.com/watch?v=njpftTeOu_c
-      {workouts.map((workout) => (
-        <div key={uuidv4()}>
-          <h2>{daysOfWeek[workout.id]} Workout</h2>
-          <form onSubmit={handleSubmit}>
-            <input type="text" id={workout.id} name="link" />
-            <button type="submit">Add Link</button>
-          </form>
-          <h3>Links</h3>
-          {workout.links.map((link) => (
-            <div key={uuidv4()}>
-              <iframe width="420" height="315" src={link}></iframe>
-              <button
-                type="Button"
-                onClick={handleDelete}
-                data-id={workout.id}
-                data-link={link}
-              >
-                Delete Workout
-              </button>
+      <div className="bg-gray-100">
+        <h1 className="text-4xl font-bold text-gray-900 sm:pr-12">
+          Workout Planner
+        </h1>
+        <section aria-labelledby="information-heading" className="mt-8">
+          {workouts.map((workout) => (
+            <div key={uuidv4()} className="mt-5">
+              <h3 className="text-2xl font-bold text-gray-900 sm:pr-12">
+                {daysOfWeek[workout.id]} Workout
+              </h3>
+              <form onSubmit={handleSubmit}>
+                <input type="text" id={workout.id} name="link" />
+                <button type="submit">Add Link</button>
+              </form>
+              {workout.links.map((link) => (
+                <div key={uuidv4()}>
+                  <iframe width="420" height="315" src={link}></iframe>
+                  <button
+                    type="Button"
+                    onClick={handleDelete}
+                    data-id={workout.id}
+                    data-link={link}
+                    className="bg-white hover:bg-gray-100 text-gray-800 font-semibold py-2 px-4 border border-gray-400 rounded shadow"
+                  >
+                    Delete Workout
+                  </button>
+                </div>
+              ))}
             </div>
           ))}
-        </div>
-      ))}
-      {isNotSunday() && (
-        <button onClick={handleAddDay} data-id={days + 1}>
-          Add {daysOfWeek[days + 1]} Workout
-        </button>
-      )}
+          {isNotSunday() && (
+            <button
+              onClick={handleAddDay}
+              data-id={days + 1}
+              className="bg-white hover:bg-gray-100 text-gray-800 font-semibold py-2 px-4 border border-gray-400 rounded shadow"
+            >
+              Add {daysOfWeek[days + 1]} Workout
+            </button>
+          )}
+        </section>
+      </div>
     </>
   );
 }
