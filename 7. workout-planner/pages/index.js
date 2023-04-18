@@ -1,5 +1,7 @@
 import { v4 as uuidv4 } from 'uuid';
 import { useState } from 'react';
+import Header from '@/components/header';
+import AddDayButton from '@/components/add_day_button';
 
 export default function Home() {
   const [days, setDays] = useState(1);
@@ -29,22 +31,6 @@ export default function Home() {
     }));
   };
 
-  const addWorkoutByDay = (dayId) => {
-    const updatedWorkouts = workouts.concat({
-      id: dayId,
-      links: [],
-    });
-    setWorkouts(updatedWorkouts);
-  };
-
-  function handleAddDay(e) {
-    const updatedCounter = days + 1;
-    setDays(updatedCounter);
-
-    const dayId = parseInt(e.target.dataset.id);
-    addWorkoutByDay(dayId);
-  }
-
   function handleSubmit(e) {
     e.preventDefault();
 
@@ -72,22 +58,11 @@ export default function Home() {
     setWorkouts(updatedWorkouts);
   }
 
-  function isNotSunday() {
-    return days !== 7;
-  }
-
   return (
     <>
       <div className="bg-white py-24 sm:py-32">
         <div className="mx-auto max-w-7xl px-6 lg:px-8">
-          <div className="mx-auto max-w-2xl lg:text-center">
-            <h2 className="text-base font-semibold leading-7 text-indigo-600">
-              Workout faster
-            </h2>
-            <p className="mt-2 text-3xl font-bold tracking-tight text-gray-900 sm:text-4xl">
-              Plan ahead your workout routine
-            </p>
-          </div>
+          <Header />
           <div className="mx-auto mt-16 max-w-6xl">
             <dl className="grid max-w-6xl grid-cols-1 gap-x-8 gap-y-10">
               {workouts.map((workout) => (
@@ -139,15 +114,12 @@ export default function Home() {
                   </dt>
                 </div>
               ))}
-              {isNotSunday() && (
-                <button
-                  onClick={handleAddDay}
-                  data-id={days + 1}
-                  className="bg-white hover:bg-gray-100 text-gray-800 font-semibold py-2 px-4 border border-gray-400 rounded shadow"
-                >
-                  Add Day {days + 1} Workout
-                </button>
-              )}
+              <AddDayButton
+                days={days}
+                setDays={setDays}
+                workouts={workouts}
+                setWorkouts={setWorkouts}
+              />
             </dl>
           </div>
         </div>
